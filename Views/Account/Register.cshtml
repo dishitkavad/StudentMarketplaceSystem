@@ -1,0 +1,84 @@
+﻿@model StudentMarketplaceSystem.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Student Registration</h1>
+
+<form asp-controller="Account" asp-action="Register" method="post">
+
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" type="email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" type="password" />
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Branch"></label>
+        <input asp-for="Branch" />
+        <span asp-validation-for="Branch"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Year"></label>
+        <select asp-for="Year">
+            <option value="">Select Year</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+        </select>
+        <span asp-validation-for="Year"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="ContactNumber"></label>
+        <input asp-for="ContactNumber" />
+        <span asp-validation-for="ContactNumber"></span>
+    </div>
+
+    <br />
+
+    <button type="submit">Register</button>
+
+</form>
+
+<br />
+
+<p>
+    Already have an account?
+    <a asp-controller="Account" asp-action="Login">Login here</a>
+</p>

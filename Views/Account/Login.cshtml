@@ -1,0 +1,49 @@
+﻿@model StudentMarketplaceSystem.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Student Login</h1>
+
+<form asp-controller="Account" asp-action="Login" method="post">
+
+    <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" type="email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <input asp-for="RememberMe" />
+        <label asp-for="RememberMe"></label>
+    </div>
+
+    <br />
+
+    <button type="submit">Login</button>
+
+</form>
+
+<br />
+
+<p>
+    Don't have an account?
+    <a asp-controller="Account" asp-action="Register">
+        Register here
+    </a>
+</p>
