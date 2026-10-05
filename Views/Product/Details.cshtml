@@ -1,0 +1,85 @@
+﻿@model StudentMarketplaceSystem.Models.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container">
+
+    <h1>Product Details</h1>
+
+    <hr />
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <h2 class="card-title">
+                @Model.Title
+            </h2>
+
+            <hr />
+
+            <p>
+                <strong>Description:</strong>
+            </p>
+
+            <p>
+                @Model.Description
+            </p>
+
+            <p>
+                <strong>Price:</strong>
+                ₹@Model.Price
+            </p>
+
+            <p>
+                <strong>Category:</strong>
+                @Model.Category
+            </p>
+
+            <p>
+                <strong>Condition:</strong>
+                @Model.Condition
+            </p>
+
+            <p>
+                <strong>Seller:</strong>
+                @Model.Seller?.Name
+            </p>
+
+            <p>
+                <strong>Posted Date:</strong>
+                @Model.CreatedDate.ToString("dd-MM-yyyy")
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+
+                @if (Model.IsSold)
+                {
+                    <span class="badge bg-danger">
+                        Sold
+                    </span>
+                }
+                else
+                {
+                    <span class="badge bg-success">
+                        Available
+                    </span>
+                }
+            </p>
+
+            <hr />
+
+            <a asp-controller="Product"
+               asp-action="Index"
+               class="btn btn-secondary">
+                Back to Products
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

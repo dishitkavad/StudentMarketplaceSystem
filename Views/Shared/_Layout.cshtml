@@ -1,20 +1,31 @@
 ﻿<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>@ViewData["Title"] - StudentMarketplaceSystem</title>
 
+    ```
     <script type="importmap"></script>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/StudentMarketplaceSystem.styles.css" asp-append-version="true" />
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/StudentMarketplaceSystem.styles.css"
+          asp-append-version="true" />
+    ```
+
 </head>
 
 <body>
 
+    ```
     <header>
 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -44,51 +55,113 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
-                    <!-- Left Side Navigation -->
+                    <!-- LEFT SIDE MENU -->
                     <ul class="navbar-nav flex-grow-1">
 
                         <!-- Home -->
                         <li class="nav-item">
+
                             <a class="nav-link text-dark"
                                asp-area=""
                                asp-controller="Home"
                                asp-action="Index">
                                 Home
                             </a>
+
                         </li>
 
                         <!-- Privacy -->
                         <li class="nav-item">
+
                             <a class="nav-link text-dark"
                                asp-area=""
                                asp-controller="Home"
                                asp-action="Privacy">
                                 Privacy
                             </a>
+
                         </li>
+
+                        @if (User.Identity != null &&
+                             User.Identity.IsAuthenticated)
+                        {
+                            <!-- Sell an Item -->
+                            <li class="nav-item">
+
+                                <a class="nav-link text-dark"
+                                   asp-controller="Product"
+                                   asp-action="Create">
+                                    Sell an Item
+                                </a>
+
+                            </li>
+
+                            <!-- My Products -->
+                            <li class="nav-item">
+
+                                <a class="nav-link text-dark"
+                                   asp-controller="Product"
+                                   asp-action="MyProducts">
+                                    My Products
+                                </a>
+
+                            </li>
+
+                            <!-- Wishlist -->
+                            <li class="nav-item">
+
+                                <a class="nav-link text-dark"
+                                   asp-controller="Wishlist"
+                                   asp-action="Index">
+                                    Wishlist
+                                </a>
+
+                            </li>
+                        }
 
                     </ul>
 
-                    <!-- Right Side Navigation -->
+
+                    <!-- RIGHT SIDE MENU -->
                     <ul class="navbar-nav">
 
-                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        @if (User.Identity != null &&
+                             User.Identity.IsAuthenticated)
                         {
-                            <!-- Logged-in User -->
+                            <!-- Username -->
                             <li class="nav-item">
+
                                 <span class="nav-link text-dark">
                                     Hello, @User.Identity.Name
                                 </span>
+
                             </li>
 
                             <!-- Profile -->
                             <li class="nav-item">
+
                                 <a class="nav-link text-dark"
                                    asp-controller="Account"
                                    asp-action="Profile">
                                     Profile
                                 </a>
+
                             </li>
+
+                            <!-- Admin -->
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+
+                                    <a class="nav-link text-dark"
+                                       asp-area="Admin"
+                                       asp-controller="Dashboard"
+                                       asp-action="Index">
+                                        Admin
+                                    </a>
+
+                                </li>
+                            }
 
                             <!-- Logout -->
                             <li class="nav-item">
@@ -144,7 +217,8 @@
 
     </header>
 
-    <!-- Main Content -->
+
+    <!-- MAIN CONTENT -->
     <div class="container">
 
         <main role="main" class="pb-3">
@@ -155,7 +229,8 @@
 
     </div>
 
-    <!-- Footer -->
+
+    <!-- FOOTER -->
     <footer class="border-top footer text-muted">
 
         <div class="container">
@@ -172,7 +247,8 @@
 
     </footer>
 
-    <!-- JavaScript -->
+
+    <!-- JAVASCRIPT -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -182,6 +258,7 @@
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
+    ```
 
 </body>
 </html>

@@ -1,0 +1,141 @@
+﻿@model IEnumerable<StudentMarketplaceSystem.Models.Product>
+
+@{
+    ViewData["Title"] = "My Products";
+}
+
+<div class="container">
+
+    <h1>My Products</h1>
+
+    <hr />
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            You have not added any products yet.
+        </div>
+
+        <a asp-controller="Product"
+           asp-action="Create"
+           class="btn btn-primary">
+            Sell an Item
+        </a>
+    }
+    else
+    {
+        <div class="mb-3">
+            <a asp-controller="Product"
+               asp-action="Create"
+               class="btn btn-primary">
+                Sell a New Item
+            </a>
+        </div>
+
+        <div class="row">
+
+            @foreach (var product in Model)
+            {
+                <div class="col-md-4 mb-4">
+
+                    <div class="card h-100">
+
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+                                @product.Title
+                            </h5>
+
+                            <p class="card-text">
+                                @product.Description
+                            </p>
+
+                            <p>
+                                <strong>Price:</strong>
+                                ₹@product.Price
+                            </p>
+
+                            <p>
+                                <strong>Category:</strong>
+                                @product.Category
+                            </p>
+
+                            <p>
+                                <strong>Condition:</strong>
+                                @product.Condition
+                            </p>
+
+                            <p>
+                                <strong>Posted:</strong>
+                                @product.CreatedDate.ToString("dd-MM-yyyy")
+                            </p>
+
+                            <p>
+                                <strong>Status:</strong>
+
+                                @if (product.IsSold)
+                                {
+                                    <span class="badge bg-danger">
+                                        Sold
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">
+                                        Available
+                                    </span>
+                                }
+                            </p>
+
+                            <hr />
+
+                            <a asp-controller="Product"
+                               asp-action="Details"
+                               asp-route-id="@product.ProductId"
+                               class="btn btn-primary">
+                                View
+                            </a>
+
+                            <a asp-controller="Product"
+                               asp-action="Edit"
+                               asp-route-id="@product.ProductId"
+                               class="btn btn-warning">
+                                Edit
+                            </a>
+
+                            <a asp-controller="Product"
+                               asp-action="Delete"
+                               asp-route-id="@product.ProductId"
+                               class="btn btn-danger">
+                                Delete
+                            </a>
+
+                            @if (!product.IsSold)
+                            {
+                                <form asp-controller="Product"
+                                      asp-action="MarkAsSold"
+                                      asp-route-id="@product.ProductId"
+                                      method="post"
+                                      class="d-inline">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <button type="submit"
+                                            class="btn btn-success">
+                                        Mark as Sold
+                                    </button>
+
+                                </form>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+
+</div>
