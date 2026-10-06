@@ -6,14 +6,15 @@
 
 <div class="container">
 
-    <h1>My Wishlist</h1>
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <hr />
+        <div>
+            <h1 class="fw-bold mb-1">My Wishlist</h1>
 
-    @if (!Model.Any())
-    {
-        <div class="alert alert-info">
-            Your wishlist is empty.
+            <p class="text-muted mb-0">
+                Products you have saved for later.
+            </p>
         </div>
 
         <a asp-controller="Product"
@@ -21,99 +22,200 @@
            class="btn btn-primary">
             Browse Products
         </a>
+
+    </div>
+
+    @if (!Model.Any())
+    {
+        <!-- EMPTY STATE -->
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body text-center py-5">
+
+                <h3 class="fw-bold">
+                    Your Wishlist is Empty
+                </h3>
+
+                <p class="text-muted">
+                    Save products you are interested in and find them here later.
+                </p>
+
+                <div class="mt-3">
+
+                    <a asp-controller="Product"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Browse Products
+                    </a>
+
+                    <a asp-controller="Product"
+                       asp-action="Create"
+                       class="btn btn-outline-secondary">
+                        Sell an Item
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
     }
     else
     {
-        <div class="row">
+        <!-- WISHLIST COUNT -->
+        <div class="alert alert-light border mb-4">
+
+            <strong>@Model.Count()</strong>
+            product(s) saved in your wishlist.
+
+        </div>
+
+        <div class="row g-4">
 
             @foreach (var item in Model)
             {
-                <div class="col-md-4 mb-4">
+                @if (item.Product != null)
+                {
+                    <div class="col-md-6 col-lg-4">
 
-                    <div class="card h-100">
+                        <div class="card h-100 shadow-sm border-0">
 
-                        <div class="card-body">
+                            <div class="card-body d-flex flex-column">
 
-                            <h5 class="card-title">
-                                @item.Product?.Title
-                            </h5>
+                                <!-- TITLE AND STATUS -->
+                                <div class="d-flex justify-content-between align-items-start mb-2">
 
-                            <p class="card-text">
-                                @item.Product?.Description
-                            </p>
+                                    <h5 class="card-title fw-bold mb-0">
+                                        @item.Product.Title
+                                    </h5>
 
-                            <p>
-                                <strong>Price:</strong>
-                                ₹@item.Product?.Price
-                            </p>
+                                    @if (item.Product.IsSold)
+                                    {
+                                        <span class="badge bg-danger">
+                                            Sold
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">
+                                            Available
+                                        </span>
+                                    }
 
-                            <p>
-                                <strong>Category:</strong>
-                                @item.Product?.Category
-                            </p>
+                                </div>
 
-                            <p>
-                                <strong>Condition:</strong>
-                                @item.Product?.Condition
-                            </p>
+                                <!-- DESCRIPTION -->
+                                <p class="text-muted small mb-3">
 
-                            <p>
-                                <strong>Seller:</strong>
-                                @item.Product?.Seller?.Name
-                            </p>
+                                    @if (item.Product.Description.Length > 120)
+                                    {
+                                        @item.Product.Description.Substring(0, 120)
+                                        <text>...</text>
+                                    }
+                                    else
+                                    {
+                                        @item.Product.Description
+                                    }
 
-                            <p>
-                                <strong>Status:</strong>
+                                </p>
 
-                                @if (item.Product?.IsSold == true)
-                                {
-                                    <span class="badge bg-danger">
-                                        Sold
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-success">
-                                        Available
-                                    </span>
-                                }
-                            </p>
+                                <!-- PRICE -->
+                                <h4 class="text-success fw-bold mb-3">
+                                    ₹@item.Product.Price.ToString("N2")
+                                </h4>
 
-                            <hr />
+                                <!-- PRODUCT INFORMATION -->
+                                <div class="mb-3">
 
-                            @if (item.Product != null)
-                            {
+                                    <div class="d-flex justify-content-between mb-2">
+
+                                        <span class="text-muted">
+                                            Category
+                                        </span>
+
+                                        <strong>
+                                            @item.Product.Category
+                                        </strong>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-between mb-2">
+
+                                        <span class="text-muted">
+                                            Condition
+                                        </span>
+
+                                        <strong>
+                                            @item.Product.Condition
+                                        </strong>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-between">
+
+                                        <span class="text-muted">
+                                            Seller
+                                        </span>
+
+                                        <strong>
+                                            @item.Product.Seller?.Name
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                                <hr />
+
+                                <!-- VIEW PRODUCT -->
                                 <a asp-controller="Product"
                                    asp-action="Details"
                                    asp-route-id="@item.Product.ProductId"
-                                   class="btn btn-primary">
+                                   class="btn btn-primary w-100 mb-2">
                                     View Product
                                 </a>
-                            }
 
-                            <form asp-controller="Wishlist"
-                                  asp-action="Remove"
-                                  asp-route-id="@item.WishlistId"
-                                  method="post"
-                                  class="d-inline">
+                                <!-- REMOVE -->
+                                <form asp-controller="Wishlist"
+                                      asp-action="Remove"
+                                      asp-route-id="@item.WishlistId"
+                                      method="post">
 
-                                @Html.AntiForgeryToken()
+                                    @Html.AntiForgeryToken()
 
-                                <button type="submit"
-                                        class="btn btn-danger">
-                                    Remove
-                                </button>
+                                    <button type="submit"
+                                            class="btn btn-outline-danger w-100">
+                                        Remove from Wishlist
+                                    </button>
 
-                            </form>
+                                </form>
+
+                            </div>
 
                         </div>
 
                     </div>
-
-                </div>
+                }
             }
 
         </div>
     }
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="mt-4">
+
+        <a asp-controller="Product"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            ← Browse Products
+        </a>
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            Home
+        </a>
+
+    </div>
 
 </div>

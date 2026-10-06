@@ -6,72 +6,86 @@
 
 <div class="container">
 
-    <h1>My Products</h1>
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <hr />
+        <div>
+            <h1 class="fw-bold mb-1">My Products</h1>
 
-    @if (!Model.Any())
-    {
-        <div class="alert alert-info">
-            You have not added any products yet.
+            <p class="text-muted mb-0">
+                Manage the items you have listed on the marketplace.
+            </p>
         </div>
 
         <a asp-controller="Product"
            asp-action="Create"
            class="btn btn-primary">
-            Sell an Item
+            + Sell an Item
         </a>
+
+    </div>
+
+    @if (!Model.Any())
+    {
+        <!-- EMPTY STATE -->
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body text-center py-5">
+
+                <h3 class="fw-bold">
+                    No Products Yet
+                </h3>
+
+                <p class="text-muted">
+                    You haven't listed any products on the marketplace yet.
+                </p>
+
+                <div class="mt-3">
+
+                    <a asp-controller="Product"
+                       asp-action="Create"
+                       class="btn btn-primary">
+                        Sell Your First Item
+                    </a>
+
+                    <a asp-controller="Product"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        Browse Products
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
     }
     else
     {
-        <div class="mb-3">
-            <a asp-controller="Product"
-               asp-action="Create"
-               class="btn btn-primary">
-                Sell a New Item
-            </a>
+        <!-- PRODUCT COUNT -->
+        <div class="alert alert-light border mb-4">
+
+            <strong>@Model.Count()</strong>
+            product(s) listed by you.
+
         </div>
 
-        <div class="row">
+        <div class="row g-4">
 
             @foreach (var product in Model)
             {
-                <div class="col-md-4 mb-4">
+                <div class="col-md-6 col-lg-4">
 
-                    <div class="card h-100">
+                    <div class="card h-100 shadow-sm border-0">
 
-                        <div class="card-body">
+                        <div class="card-body d-flex flex-column">
 
-                            <h5 class="card-title">
-                                @product.Title
-                            </h5>
+                            <!-- TITLE -->
+                            <div class="d-flex justify-content-between align-items-start mb-2">
 
-                            <p class="card-text">
-                                @product.Description
-                            </p>
-
-                            <p>
-                                <strong>Price:</strong>
-                                ₹@product.Price
-                            </p>
-
-                            <p>
-                                <strong>Category:</strong>
-                                @product.Category
-                            </p>
-
-                            <p>
-                                <strong>Condition:</strong>
-                                @product.Condition
-                            </p>
-
-                            <p>
-                                <strong>Posted:</strong>
-                                @product.CreatedDate.ToString("dd-MM-yyyy")
-                            </p>
-
-                            <p>
-                                <strong>Status:</strong>
+                                <h5 class="card-title fw-bold mb-0">
+                                    @product.Title
+                                </h5>
 
                                 @if (product.IsSold)
                                 {
@@ -85,43 +99,111 @@
                                         Available
                                     </span>
                                 }
+
+                            </div>
+
+                            <!-- DESCRIPTION -->
+                            <p class="text-muted small mb-3">
+
+                                @if (product.Description.Length > 120)
+                                {
+                                    @product.Description.Substring(0, 120)
+                                    <text>...</text>
+                                }
+                                else
+                                {
+                                    @product.Description
+                                }
+
                             </p>
+
+                            <!-- PRICE -->
+                            <h4 class="text-success fw-bold mb-3">
+                                ₹@product.Price.ToString("N2")
+                            </h4>
+
+                            <!-- PRODUCT INFORMATION -->
+                            <div class="mb-3">
+
+                                <div class="d-flex justify-content-between mb-2">
+
+                                    <span class="text-muted">
+                                        Category
+                                    </span>
+
+                                    <strong>
+                                        @product.Category
+                                    </strong>
+
+                                </div>
+
+                                <div class="d-flex justify-content-between mb-2">
+
+                                    <span class="text-muted">
+                                        Condition
+                                    </span>
+
+                                    <strong>
+                                        @product.Condition
+                                    </strong>
+
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+
+                                    <span class="text-muted">
+                                        Posted
+                                    </span>
+
+                                    <strong>
+                                        @product.CreatedDate.ToString("dd-MM-yyyy")
+                                    </strong>
+
+                                </div>
+
+                            </div>
 
                             <hr />
 
+                            <!-- VIEW BUTTON -->
                             <a asp-controller="Product"
                                asp-action="Details"
                                asp-route-id="@product.ProductId"
-                               class="btn btn-primary">
-                                View
+                               class="btn btn-primary w-100 mb-2">
+                                View Details
                             </a>
 
-                            <a asp-controller="Product"
-                               asp-action="Edit"
-                               asp-route-id="@product.ProductId"
-                               class="btn btn-warning">
-                                Edit
-                            </a>
+                            <!-- EDIT / DELETE -->
+                            <div class="d-flex gap-2 mb-2">
 
-                            <a asp-controller="Product"
-                               asp-action="Delete"
-                               asp-route-id="@product.ProductId"
-                               class="btn btn-danger">
-                                Delete
-                            </a>
+                                <a asp-controller="Product"
+                                   asp-action="Edit"
+                                   asp-route-id="@product.ProductId"
+                                   class="btn btn-outline-warning flex-fill">
+                                    Edit
+                                </a>
 
+                                <a asp-controller="Product"
+                                   asp-action="Delete"
+                                   asp-route-id="@product.ProductId"
+                                   class="btn btn-outline-danger flex-fill">
+                                    Delete
+                                </a>
+
+                            </div>
+
+                            <!-- MARK AS SOLD -->
                             @if (!product.IsSold)
                             {
                                 <form asp-controller="Product"
                                       asp-action="MarkAsSold"
                                       asp-route-id="@product.ProductId"
-                                      method="post"
-                                      class="d-inline">
+                                      method="post">
 
                                     @Html.AntiForgeryToken()
 
                                     <button type="submit"
-                                            class="btn btn-success">
+                                            class="btn btn-success w-100">
                                         Mark as Sold
                                     </button>
 
@@ -137,5 +219,22 @@
 
         </div>
     }
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="mt-4">
+
+        <a asp-controller="Product"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            ← Browse Products
+        </a>
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            Home
+        </a>
+
+    </div>
 
 </div>

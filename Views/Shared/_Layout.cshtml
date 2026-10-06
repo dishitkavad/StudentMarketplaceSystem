@@ -1,13 +1,14 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - StudentMarketplaceSystem</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
 
-    ```
-    <script type="importmap"></script>
+    <title>
+        @ViewData["Title"] - StudentMarketplaceSystem
+    </title>
 
     <link rel="stylesheet"
           href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -19,33 +20,39 @@
     <link rel="stylesheet"
           href="~/StudentMarketplaceSystem.styles.css"
           asp-append-version="true" />
-    ```
-
 </head>
 
 <body>
 
-    ```
+    <!-- ========================= -->
+    <!-- NAVIGATION BAR -->
+    <!-- ========================= -->
+
     <header>
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
 
-            <div class="container-fluid">
+            <div class="container">
 
-                <!-- Website Name -->
-                <a class="navbar-brand"
+                <!-- WEBSITE NAME -->
+
+                <a class="navbar-brand fw-bold"
                    asp-area=""
                    asp-controller="Home"
                    asp-action="Index">
-                    StudentMarketplaceSystem
+
+                    Student Marketplace
+
                 </a>
 
-                <!-- Mobile Menu Button -->
+
+                <!-- MOBILE MENU BUTTON -->
+
                 <button class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent"
+                        data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar"
                         aria-expanded="false"
                         aria-label="Toggle navigation">
 
@@ -53,117 +60,300 @@
 
                 </button>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
-                    <!-- LEFT SIDE MENU -->
-                    <ul class="navbar-nav flex-grow-1">
+                <!-- NAVIGATION CONTENT -->
 
-                        <!-- Home -->
+                <div class="collapse navbar-collapse"
+                     id="mainNavbar">
+
+
+                    <!-- ========================= -->
+                    <!-- LEFT SIDE -->
+                    <!-- ========================= -->
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+                        <!-- HOME -->
+
                         <li class="nav-item">
 
-                            <a class="nav-link text-dark"
+                            <a class="nav-link"
                                asp-area=""
                                asp-controller="Home"
                                asp-action="Index">
+
                                 Home
+
                             </a>
 
                         </li>
 
-                        <!-- Privacy -->
-                        <li class="nav-item">
-
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-controller="Home"
-                               asp-action="Privacy">
-                                Privacy
-                            </a>
-
-                        </li>
 
                         @if (User.Identity != null &&
                              User.Identity.IsAuthenticated)
                         {
-                            <!-- Sell an Item -->
+
+
+                            <!-- BROWSE PRODUCTS -->
+
                             <li class="nav-item">
 
-                                <a class="nav-link text-dark"
+                                <a class="nav-link"
+                                   asp-area=""
+                                   asp-controller="Product"
+                                   asp-action="Index">
+
+                                    Browse
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- SELL ITEM -->
+
+                            <li class="nav-item">
+
+                                <a class="nav-link"
+                                   asp-area=""
                                    asp-controller="Product"
                                    asp-action="Create">
+
                                     Sell an Item
+
                                 </a>
 
                             </li>
 
-                            <!-- My Products -->
+
+                            <!-- MY PRODUCTS -->
+
                             <li class="nav-item">
 
-                                <a class="nav-link text-dark"
+                                <a class="nav-link"
+                                   asp-area=""
                                    asp-controller="Product"
                                    asp-action="MyProducts">
+
                                     My Products
+
                                 </a>
 
                             </li>
 
-                            <!-- Wishlist -->
+
+                            <!-- WISHLIST -->
+
                             <li class="nav-item">
 
-                                <a class="nav-link text-dark"
+                                <a class="nav-link"
+                                   asp-area=""
                                    asp-controller="Wishlist"
                                    asp-action="Index">
+
                                     Wishlist
+
                                 </a>
 
                             </li>
+
+
+                            <!-- MY ORDERS -->
+
+                            <li class="nav-item">
+
+                                <a class="nav-link"
+                                   asp-area=""
+                                   asp-controller="Transaction"
+                                   asp-action="MyOrders">
+
+                                    My Orders
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- BUY REQUESTS -->
+
+                            <li class="nav-item">
+
+                                <a class="nav-link"
+                                   asp-area=""
+                                   asp-controller="Transaction"
+                                   asp-action="Requests">
+
+                                    Buy Requests
+
+                                </a>
+
+                            </li>
+
                         }
 
                     </ul>
 
 
-                    <!-- RIGHT SIDE MENU -->
+                    <!-- ========================= -->
+                    <!-- RIGHT SIDE -->
+                    <!-- ========================= -->
+
                     <ul class="navbar-nav">
+
 
                         @if (User.Identity != null &&
                              User.Identity.IsAuthenticated)
                         {
-                            <!-- Username -->
+
+
+                            <!-- USER NAME -->
+
                             <li class="nav-item">
 
-                                <span class="nav-link text-dark">
-                                    Hello, @User.Identity.Name
+                                <span class="nav-link text-muted">
+
+                                    Hello,
+                                    @User.Identity.Name
+
                                 </span>
 
                             </li>
 
-                            <!-- Profile -->
+
+                            <!-- PROFILE -->
+
                             <li class="nav-item">
 
-                                <a class="nav-link text-dark"
+                                <a class="nav-link"
+                                   asp-area=""
                                    asp-controller="Account"
                                    asp-action="Profile">
+
                                     Profile
+
                                 </a>
 
                             </li>
 
-                            <!-- Admin -->
+
+                            <!-- ========================= -->
+                            <!-- ADMIN MENU -->
+                            <!-- ========================= -->
                             @if (User.IsInRole("Admin"))
                             {
-                                <li class="nav-item">
 
-                                    <a class="nav-link text-dark"
-                                       asp-area="Admin"
-                                       asp-controller="Dashboard"
-                                       asp-action="Index">
+                                <li class="nav-item dropdown">
+
+                                    <a class="nav-link dropdown-toggle"
+                                       href="#"
+                                       role="button"
+                                       data-bs-toggle="dropdown"
+                                       aria-expanded="false">
+
                                         Admin
+
                                     </a>
 
+
+                                    <ul class="dropdown-menu dropdown-menu-end">
+
+
+                                        <!-- DASHBOARD -->
+
+                                        <li>
+
+                                            <a class="dropdown-item"
+                                               asp-area="Admin"
+                                               asp-controller="Dashboard"
+                                               asp-action="Index">
+
+                                                Admin Dashboard
+
+                                            </a>
+
+                                        </li>
+
+
+                                        <li>
+
+                                            <hr class="dropdown-divider" />
+
+                                        </li>
+
+
+                                        <!-- USERS -->
+
+                                        <li>
+
+                                            <a class="dropdown-item"
+                                               asp-area="Admin"
+                                               asp-controller="Users"
+                                               asp-action="Index">
+
+                                                Manage Users
+
+                                            </a>
+
+                                        </li>
+
+
+                                        <!-- PRODUCTS -->
+
+                                        <li>
+
+                                            <a class="dropdown-item"
+                                               asp-area="Admin"
+                                               asp-controller="Products"
+                                               asp-action="Index">
+
+                                                Manage Products
+
+                                            </a>
+
+                                        </li>
+
+
+                                        <!-- REPORTS -->
+
+                                        <li>
+
+                                            <a class="dropdown-item"
+                                               asp-area="Admin"
+                                               asp-controller="Reports"
+                                               asp-action="Index">
+
+                                                Reports
+
+                                            </a>
+
+                                        </li>
+
+
+                                        <!-- STATISTICS -->
+
+                                        <li>
+
+                                            <a class="dropdown-item"
+                                               asp-area="Admin"
+                                               asp-controller="Statistics"
+                                               asp-action="Index">
+
+                                                Statistics
+
+                                            </a>
+
+                                        </li>
+
+                                    </ul>
+
                                 </li>
+
                             }
 
-                            <!-- Logout -->
+
+                            <!-- LOGOUT -->
+
                             <li class="nav-item">
 
                                 <form asp-controller="Account"
@@ -174,37 +364,52 @@
                                     @Html.AntiForgeryToken()
 
                                     <button type="submit"
-                                            class="nav-link btn btn-link text-dark">
+                                            class="nav-link btn btn-link">
+
                                         Logout
+
                                     </button>
 
                                 </form>
 
                             </li>
+
                         }
                         else
                         {
-                            <!-- Register -->
+
+
+                            <!-- REGISTER -->
+
                             <li class="nav-item">
 
-                                <a class="nav-link text-dark"
+                                <a class="nav-link"
+                                   asp-area=""
                                    asp-controller="Account"
                                    asp-action="Register">
+
                                     Register
+
                                 </a>
 
                             </li>
 
-                            <!-- Login -->
+
+                            <!-- LOGIN -->
+
                             <li class="nav-item">
 
-                                <a class="nav-link text-dark"
+                                <a class="nav-link"
+                                   asp-area=""
                                    asp-controller="Account"
                                    asp-action="Login">
+
                                     Login
+
                                 </a>
 
                             </li>
+
                         }
 
                     </ul>
@@ -218,29 +423,36 @@
     </header>
 
 
+    <!-- ========================= -->
     <!-- MAIN CONTENT -->
-    <div class="container">
+    <!-- ========================= -->
 
-        <main role="main" class="pb-3">
+    <main role="main"
+          class="container py-4">
 
-            @RenderBody()
+        @RenderBody()
 
-        </main>
-
-    </div>
+    </main>
 
 
+    <!-- ========================= -->
     <!-- FOOTER -->
-    <footer class="border-top footer text-muted">
+    <!-- ========================= -->
 
-        <div class="container">
+    <footer class="border-top text-muted py-3 mt-4">
 
-            &copy; 2026 - StudentMarketplaceSystem -
+        <div class="container text-center">
+
+            &copy; 2026 - StudentMarketplaceSystem
+
+            |
 
             <a asp-area=""
                asp-controller="Home"
                asp-action="Privacy">
+
                 Privacy
+
             </a>
 
         </div>
@@ -248,7 +460,10 @@
     </footer>
 
 
+    <!-- ========================= -->
     <!-- JAVASCRIPT -->
+    <!-- ========================= -->
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -258,7 +473,7 @@
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
-    ```
 
 </body>
+
 </html>

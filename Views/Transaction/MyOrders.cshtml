@@ -1,0 +1,230 @@
+﻿@model IEnumerable<StudentMarketplaceSystem.Models.Transaction>
+
+@{
+    ViewData["Title"] = "My Orders";
+}
+
+<div class="container">
+
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="fw-bold mb-1">My Orders</h1>
+
+            <p class="text-muted mb-0">
+                Track your product requests and transactions.
+            </p>
+        </div>
+
+        <a asp-controller="Product"
+           asp-action="Index"
+           class="btn btn-primary">
+            Browse Products
+        </a>
+
+    </div>
+
+    <!-- TRANSACTION MESSAGE -->
+    @if (TempData["TransactionMessage"] != null)
+    {
+        <div class="alert alert-info">
+            @TempData["TransactionMessage"]
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <!-- EMPTY STATE -->
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body text-center py-5">
+
+                <h3 class="fw-bold">
+                    No Orders Yet
+                </h3>
+
+                <p class="text-muted">
+                    You haven't made any buy requests yet.
+                </p>
+
+                <div class="mt-3">
+
+                    <a asp-controller="Product"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Browse Products
+                    </a>
+
+                    <a asp-controller="Wishlist"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        My Wishlist
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <!-- ORDER COUNT -->
+        <div class="alert alert-light border mb-4">
+
+            <strong>@Model.Count()</strong>
+            order request(s) found.
+
+        </div>
+
+        <div class="row g-4">
+
+            @foreach (var order in Model)
+            {
+                <div class="col-md-6">
+
+                    <div class="card h-100 shadow-sm border-0">
+
+                        <div class="card-body d-flex flex-column">
+
+                            <!-- PRODUCT TITLE -->
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+
+                                <h4 class="fw-bold mb-0">
+                                    @order.Product?.Title
+                                </h4>
+
+                                <!-- STATUS -->
+                                @if (order.Status == "Pending")
+                                {
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+                                }
+                                else if (order.Status == "Accepted")
+                                {
+                                    <span class="badge bg-success">
+                                        Accepted
+                                    </span>
+                                }
+                                else if (order.Status == "Rejected")
+                                {
+                                    <span class="badge bg-danger">
+                                        Rejected
+                                    </span>
+                                }
+                                else if (order.Status == "Completed")
+                                {
+                                    <span class="badge bg-primary">
+                                        Completed
+                                    </span>
+                                }
+                                else if (order.Status == "Cancelled")
+                                {
+                                    <span class="badge bg-secondary">
+                                        Cancelled
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">
+                                        @order.Status
+                                    </span>
+                                }
+
+                            </div>
+
+                            <!-- PRICE -->
+                            <h4 class="text-success fw-bold mb-3">
+                                ₹@order.Product?.Price.ToString("N2")
+                            </h4>
+
+                            <!-- ORDER INFORMATION -->
+                            <div class="mb-3">
+
+                                <div class="d-flex justify-content-between mb-2">
+
+                                    <span class="text-muted">
+                                        Seller
+                                    </span>
+
+                                    <strong>
+                                        @order.Seller?.Name
+                                    </strong>
+
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+
+                                    <span class="text-muted">
+                                        Request Date
+                                    </span>
+
+                                    <strong>
+                                        @order.CreatedDate.ToString("dd-MM-yyyy")
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <hr />
+
+                            <!-- VIEW PRODUCT -->
+                            @if (order.Product != null)
+                            {
+                                <a asp-controller="Product"
+                                   asp-action="Details"
+                                   asp-route-id="@order.Product.ProductId"
+                                   class="btn btn-primary w-100 mb-2">
+                                    View Product
+                                </a>
+                            }
+
+                            <!-- CANCEL REQUEST -->
+                            @if (order.Status == "Pending")
+                            {
+                                <form asp-controller="Transaction"
+                                      asp-action="Cancel"
+                                      asp-route-id="@order.TransactionId"
+                                      method="post">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <button type="submit"
+                                            class="btn btn-outline-danger w-100">
+                                        Cancel Request
+                                    </button>
+
+                                </form>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="mt-4">
+
+        <a asp-controller="Product"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            ← Browse Products
+        </a>
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            Home
+        </a>
+
+    </div>
+
+</div>

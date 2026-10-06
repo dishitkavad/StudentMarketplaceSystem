@@ -1,195 +1,247 @@
-﻿@model IEnumerable<StudentMarketplaceSystem.Models.Product>
+﻿
+@model IEnumerable<StudentMarketplaceSystem.Models.Product>
 
 @{
     ViewData["Title"] = "Browse Products";
 
-var currentUserId =
-    User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-
-
+    var currentUserId =
+        User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 }
 
 <div class="container">
 
-    ```
-    <h1>Browse Products</h1>
+    <!-- PAGE HEADER -->
 
-    <hr />
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <!-- Search, Category Filter and Sorting -->
-    <form asp-controller="Product"
-          asp-action="Index"
-          method="get"
-          class="mb-4">
+        <div>
+            <h1 class="fw-bold mb-1">
+                Browse Products
+            </h1>
 
-        <div class="row">
+            <p class="text-muted mb-0">
+                Find useful products from fellow students.
+            </p>
+        </div>
 
-            <!-- Search -->
-            <div class="col-md-4 mb-2">
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
 
-                <input type="text"
-                       name="search"
-                       value="@ViewBag.Search"
-                       class="form-control"
-                       placeholder="Search products by title..." />
+            ← Home
 
-            </div>
+        </a>
 
-            <!-- Category -->
-            <div class="col-md-3 mb-2">
+    </div>
 
-                <select name="category"
-                        class="form-select">
 
-                    <option value="">
-                        -- All Categories --
-                    </option>
+    <!-- SEARCH AND FILTERS -->
 
-                    <option value="Books & Notes"
-                            selected="@(ViewBag.Category == "Books & Notes")">
-                        Books & Notes
-                    </option>
+    <div class="card shadow-sm mb-4">
 
-                    <option value="Electronics"
-                            selected="@(ViewBag.Category == "Electronics")">
-                        Electronics
-                    </option>
+        <div class="card-body">
 
-                    <option value="Engineering Equipment"
-                            selected="@(ViewBag.Category == "Engineering Equipment")">
-                        Engineering Equipment
-                    </option>
+            <h5 class="card-title mb-3">
+                Search & Filter
+            </h5>
 
-                    <option value="Furniture"
-                            selected="@(ViewBag.Category == "Furniture")">
-                        Furniture
-                    </option>
+            <form asp-controller="Product"
+                  asp-action="Index"
+                  method="get">
 
-                    <option value="Clothing"
-                            selected="@(ViewBag.Category == "Clothing")">
-                        Clothing
-                    </option>
+                <div class="row">
 
-                    <option value="Sports"
-                            selected="@(ViewBag.Category == "Sports")">
-                        Sports
-                    </option>
+                    <!-- SEARCH -->
 
-                    <option value="Stationery"
-                            selected="@(ViewBag.Category == "Stationery")">
-                        Stationery
-                    </option>
+                    <div class="col-md-4 mb-3">
 
-                    <option value="Other"
-                            selected="@(ViewBag.Category == "Other")">
-                        Other
-                    </option>
+                        <label class="form-label">
+                            Search
+                        </label>
 
-                </select>
+                        <input type="text"
+                               name="search"
+                               value="@ViewBag.Search"
+                               class="form-control"
+                               placeholder="Search by product title..." />
 
-            </div>
+                    </div>
 
-            <!-- Sorting -->
-            <div class="col-md-3 mb-2">
 
-                <select name="sort"
-                        class="form-select">
+                    <!-- CATEGORY -->
 
-                    <option value="">
-                        -- Newest First --
-                    </option>
+                    <div class="col-md-3 mb-3">
 
-                    <option value="oldest"
-                            selected="@(ViewBag.Sort == "oldest")">
-                        Oldest First
-                    </option>
+                        <label class="form-label">
+                            Category
+                        </label>
 
-                    <option value="price_low"
-                            selected="@(ViewBag.Sort == "price_low")">
-                        Price: Low to High
-                    </option>
+                        <select name="category"
+                                class="form-select">
 
-                    <option value="price_high"
-                            selected="@(ViewBag.Sort == "price_high")">
-                        Price: High to Low
-                    </option>
+                            <option value="">
+                                All Categories
+                            </option>
 
-                </select>
+                            <option value="Books & Notes"
+                                    selected="@(ViewBag.Category == "Books & Notes")">
+                                Books & Notes
+                            </option>
 
-            </div>
+                            <option value="Electronics"
+                                    selected="@(ViewBag.Category == "Electronics")">
+                                Electronics
+                            </option>
 
-            <!-- Buttons -->
-            <div class="col-md-2 mb-2">
+                            <option value="Engineering Equipment"
+                                    selected="@(ViewBag.Category == "Engineering Equipment")">
+                                Engineering Equipment
+                            </option>
 
-                <button type="submit"
-                        class="btn btn-primary">
-                    Apply
-                </button>
+                            <option value="Furniture"
+                                    selected="@(ViewBag.Category == "Furniture")">
+                                Furniture
+                            </option>
 
-                <a asp-controller="Product"
-                   asp-action="Index"
-                   class="btn btn-secondary">
-                    Clear
-                </a>
+                            <option value="Clothing"
+                                    selected="@(ViewBag.Category == "Clothing")">
+                                Clothing
+                            </option>
 
-            </div>
+                            <option value="Sports"
+                                    selected="@(ViewBag.Category == "Sports")">
+                                Sports
+                            </option>
+
+                            <option value="Stationery"
+                                    selected="@(ViewBag.Category == "Stationery")">
+                                Stationery
+                            </option>
+
+                            <option value="Other"
+                                    selected="@(ViewBag.Category == "Other")">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- SORT -->
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label">
+                            Sort By
+                        </label>
+
+                        <select name="sort"
+                                class="form-select">
+
+                            <option value="">
+                                Newest First
+                            </option>
+
+                            <option value="oldest"
+                                    selected="@(ViewBag.Sort == "oldest")">
+                                Oldest First
+                            </option>
+
+                            <option value="price_low"
+                                    selected="@(ViewBag.Sort == "price_low")">
+                                Price: Low to High
+                            </option>
+
+                            <option value="price_high"
+                                    selected="@(ViewBag.Sort == "price_high")">
+                                Price: High to Low
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- FILTER BUTTONS -->
+
+                    <div class="col-md-2 mb-3 d-flex align-items-end">
+
+                        <div class="w-100">
+
+                            <button type="submit"
+                                    class="btn btn-primary w-100 mb-2">
+
+                                Apply Filters
+
+                            </button>
+
+                            <a asp-controller="Product"
+                               asp-action="Index"
+                               class="btn btn-outline-secondary w-100">
+
+                                Clear
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
 
         </div>
 
-    </form>
+    </div>
 
 
-    <!-- Filter Result Message -->
+    <!-- FILTER RESULT MESSAGE -->
     @if (!string.IsNullOrWhiteSpace(ViewBag.Search) ||
-         !string.IsNullOrWhiteSpace(ViewBag.Category) ||
-         !string.IsNullOrWhiteSpace(ViewBag.Sort))
+             !string.IsNullOrWhiteSpace(ViewBag.Category) ||
+             !string.IsNullOrWhiteSpace(ViewBag.Sort))
     {
         <div class="alert alert-info">
 
-            Showing filtered products.
+            <strong>Filters Applied:</strong>
 
             @if (!string.IsNullOrWhiteSpace(ViewBag.Search))
             {
-                <span>
-                    Search:
-                    <strong>@ViewBag.Search</strong>
+                <span class="ms-2">
+                    Search: <strong>@ViewBag.Search</strong>
                 </span>
             }
 
             @if (!string.IsNullOrWhiteSpace(ViewBag.Category))
             {
-                <span>
-                    | Category:
-                    <strong>@ViewBag.Category</strong>
+                <span class="ms-2">
+                    Category: <strong>@ViewBag.Category</strong>
                 </span>
             }
 
             @if (ViewBag.Sort == "oldest")
             {
-                <span>
-                    | Sort:
-                    <strong>Oldest First</strong>
+                <span class="ms-2">
+                    Sort: <strong>Oldest First</strong>
                 </span>
             }
             else if (ViewBag.Sort == "price_low")
             {
-                <span>
-                    | Sort:
-                    <strong>Price: Low to High</strong>
+                <span class="ms-2">
+                    Sort: <strong>Price: Low to High</strong>
                 </span>
             }
             else if (ViewBag.Sort == "price_high")
             {
-                <span>
-                    | Sort:
-                    <strong>Price: High to Low</strong>
+                <span class="ms-2">
+                    Sort: <strong>Price: High to Low</strong>
                 </span>
             }
             else
             {
-                <span>
-                    | Sort:
-                    <strong>Newest First</strong>
+                <span class="ms-2">
+                    Sort: <strong>Newest First</strong>
                 </span>
             }
 
@@ -197,11 +249,50 @@ var currentUserId =
     }
 
 
-    <!-- Products -->
+    <!-- PRODUCT COUNT -->
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h4 class="mb-0">
+            Available Products
+        </h4>
+
+        <span class="badge bg-secondary">
+            @Model.Count() product(s)
+        </span>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
     @if (!Model.Any())
     {
-        <div class="alert alert-warning">
-            No products found.
+        <div class="card shadow-sm">
+
+            <div class="card-body text-center py-5">
+
+                <div class="fs-1 mb-3">
+                    📦
+                </div>
+
+                <h4>
+                    No Products Found
+                </h4>
+
+                <p class="text-muted">
+                    Try changing your search or filter options.
+                </p>
+
+                <a asp-controller="Product"
+                   asp-action="Index"
+                   class="btn btn-primary">
+
+                    View All Products
+
+                </a>
+
+            </div>
+
         </div>
     }
     else
@@ -210,56 +301,23 @@ var currentUserId =
 
             @foreach (var product in Model)
             {
-                <div class="col-md-4 mb-4">
+                <div class="col-lg-4 col-md-6 mb-4">
 
-                    <div class="card h-100">
+                    <div class="card h-100 shadow-sm">
 
-                        <div class="card-body">
+                        <div class="card-body d-flex flex-column">
 
-                            <!-- Product Title -->
-                            <h5 class="card-title">
-                                @product.Title
-                            </h5>
 
-                            <!-- Description -->
-                            <p class="card-text">
-                                @product.Description
-                            </p>
+                            <!-- TITLE -->
 
-                            <!-- Price -->
-                            <p>
-                                <strong>Price:</strong>
-                                ₹@product.Price
-                            </p>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
 
-                            <!-- Category -->
-                            <p>
-                                <strong>Category:</strong>
-                                @product.Category
-                            </p>
+                                <h5 class="card-title fw-bold mb-0">
 
-                            <!-- Condition -->
-                            <p>
-                                <strong>Condition:</strong>
-                                @product.Condition
-                            </p>
+                                    @product.Title
 
-                            <!-- Seller -->
-                            <p>
-                                <strong>Seller:</strong>
-                                @product.Seller?.Name
-                            </p>
+                                </h5>
 
-                            <!-- Posted Date -->
-                            <p>
-                                <strong>Posted:</strong>
-                                @product.CreatedDate.ToString("dd-MM-yyyy")
-                            </p>
-
-                            <!-- Status -->
-                            <p>
-
-                                <strong>Status:</strong>
 
                                 @if (product.IsSold)
                                 {
@@ -274,80 +332,160 @@ var currentUserId =
                                     </span>
                                 }
 
+                            </div>
+
+
+                            <!-- DESCRIPTION -->
+
+                            <p class="card-text text-muted">
+
+                                @if (product.Description.Length > 120)
+                                {
+                                    @product.Description.Substring(0, 120)
+
+                                    <span>...</span>
+                                }
+                                else
+                                {
+                                    @product.Description
+                                }
+
                             </p>
+
+
+                            <!-- PRICE -->
+
+                            <h4 class="text-primary fw-bold">
+                                ₹@product.Price
+                            </h4>
+
+
+                            <!-- PRODUCT INFORMATION -->
+
+                            <div class="mb-3">
+
+                                <p class="mb-1">
+                                    <strong>Category:</strong>
+                                    @product.Category
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Condition:</strong>
+                                    @product.Condition
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Seller:</strong>
+                                    @product.Seller?.Name
+                                </p>
+
+                                <p class="mb-0 text-muted small">
+                                    Posted:
+                                    @product.CreatedDate.ToString("dd-MM-yyyy")
+                                </p>
+
+                            </div>
+
 
                             <hr />
 
 
-                            <!-- View Details -->
-                            <a asp-controller="Product"
-                               asp-action="Details"
-                               asp-route-id="@product.ProductId"
-                               class="btn btn-primary">
-                                View Details
-                            </a>
+                            <!-- ACTION BUTTONS -->
 
+                            <div class="mt-auto">
 
-                            <!-- Add to Wishlist -->
-                            @if (!product.IsSold &&
-                                 product.UserId != currentUserId)
-                            {
-                                <form asp-controller="Wishlist"
-                                      asp-action="Add"
-                                      asp-route-id="@product.ProductId"
-                                      method="post"
-                                      class="d-inline">
-
-                                    @Html.AntiForgeryToken()
-
-                                    <button type="submit"
-                                            class="btn btn-outline-danger">
-                                        ❤️ Add to Wishlist
-                                    </button>
-
-                                </form>
-                            }
-
-
-                            <!-- Owner Controls -->
-                            @if (product.UserId == currentUserId)
-                            {
-                                <hr />
+                                <!-- VIEW DETAILS -->
 
                                 <a asp-controller="Product"
-                                   asp-action="Edit"
+                                   asp-action="Details"
                                    asp-route-id="@product.ProductId"
-                                   class="btn btn-warning">
-                                    Edit
-                                </a>
+                                   class="btn btn-primary w-100 mb-2">
 
-                                <a asp-controller="Product"
-                                   asp-action="Delete"
-                                   asp-route-id="@product.ProductId"
-                                   class="btn btn-danger">
-                                    Delete
+                                    View Details
+
                                 </a>
 
 
-                                <!-- Mark as Sold -->
-                                @if (!product.IsSold)
+                                <!-- WISHLIST -->
+                                @if (!product.IsSold &&
+                                                                     product.UserId != currentUserId)
                                 {
-                                    <form asp-controller="Product"
-                                          asp-action="MarkAsSold"
+                                    <form asp-controller="Wishlist"
+                                          asp-action="Add"
                                           asp-route-id="@product.ProductId"
                                           method="post"
-                                          class="d-inline">
+                                          class="mb-2">
 
                                         @Html.AntiForgeryToken()
 
                                         <button type="submit"
-                                                class="btn btn-success">
-                                            Mark as Sold
+                                                class="btn btn-outline-danger w-100">
+
+                                            ❤️ Add to Wishlist
+
                                         </button>
 
                                     </form>
                                 }
-                            }
+
+
+                                <!-- OWNER CONTROLS -->
+                                @if (product.UserId == currentUserId)
+                                {
+                                    <div class="border-top pt-2 mt-2">
+
+                                        <p class="small text-muted mb-2">
+                                            Your Product
+                                        </p>
+
+
+                                        <div class="d-flex gap-2">
+
+                                            <a asp-controller="Product"
+                                               asp-action="Edit"
+                                               asp-route-id="@product.ProductId"
+                                               class="btn btn-warning flex-fill">
+
+                                                Edit
+
+                                            </a>
+
+                                            <a asp-controller="Product"
+                                               asp-action="Delete"
+                                               asp-route-id="@product.ProductId"
+                                               class="btn btn-danger flex-fill">
+
+                                                Delete
+
+                                            </a>
+
+                                        </div>
+
+
+                                        @if (!product.IsSold)
+                                        {
+                                            <form asp-controller="Product"
+                                                  asp-action="MarkAsSold"
+                                                  asp-route-id="@product.ProductId"
+                                                  method="post"
+                                                  class="mt-2">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <button type="submit"
+                                                        class="btn btn-success w-100">
+
+                                                    ✓ Mark as Sold
+
+                                                </button>
+
+                                            </form>
+                                        }
+
+                                    </div>
+                                }
+
+                            </div>
 
                         </div>
 
@@ -358,6 +496,5 @@ var currentUserId =
 
         </div>
     }
-   
 
 </div>

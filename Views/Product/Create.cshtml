@@ -6,174 +6,264 @@
 
 <div class="container">
 
-    <h1>Sell an Item</h1>
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <hr />
-
-    <div asp-validation-summary="ModelOnly"
-         class="text-danger">
-    </div>
-
-    <form asp-controller="Product"
-          asp-action="Create"
-          method="post">
-
-        @Html.AntiForgeryToken()
-
-        <!-- Product Title -->
-        <div class="mb-3">
-
-            <label asp-for="Title"
-                   class="form-label">
-            </label>
-
-            <input asp-for="Title"
-                   class="form-control"
-                   placeholder="Enter product title" />
-
-            <span asp-validation-for="Title"
-                  class="text-danger">
-            </span>
-
+        <div>
+            <h1 class="fw-bold mb-1">Sell an Item</h1>
+            <p class="text-muted mb-0">
+                Add your product and make it available to other students.
+            </p>
         </div>
 
-        <!-- Description -->
-        <div class="mb-3">
-
-            <label asp-for="Description"
-                   class="form-label">
-            </label>
-
-            <textarea asp-for="Description"
-                      class="form-control"
-                      rows="5"
-                      placeholder="Describe your product">
-            </textarea>
-
-            <span asp-validation-for="Description"
-                  class="text-danger">
-            </span>
-
-        </div>
-
-        <!-- Price -->
-        <div class="mb-3">
-
-            <label asp-for="Price"
-                   class="form-label">
-            </label>
-
-            <input asp-for="Price"
-                   type="number"
-                   step="0.01"
-                   class="form-control"
-                   placeholder="Enter price" />
-
-            <span asp-validation-for="Price"
-                  class="text-danger">
-            </span>
-
-        </div>
-
-        <!-- Category -->
-        <div class="mb-3">
-
-            <label asp-for="Category"
-                   class="form-label">
-                Category
-            </label>
-
-            <select asp-for="Category"
-                    class="form-select">
-
-                <option value="">
-                    -- Select Category --
-                </option>
-
-                <option value="Books & Notes">
-                    Books & Notes
-                </option>
-
-                <option value="Electronics">
-                    Electronics
-                </option>
-
-                <option value="Engineering Equipment">
-                    Engineering Equipment
-                </option>
-
-                <option value="Furniture">
-                    Furniture
-                </option>
-
-                <option value="Clothing">
-                    Clothing
-                </option>
-
-                <option value="Sports">
-                    Sports
-                </option>
-
-                <option value="Stationery">
-                    Stationery
-                </option>
-
-                <option value="Other">
-                    Other
-                </option>
-
-            </select>
-
-            <span asp-validation-for="Category"
-                  class="text-danger">
-            </span>
-
-        </div>
-
-        <!-- Condition -->
-        <div class="mb-3">
-
-            <label asp-for="Condition"
-                   class="form-label">
-                Condition
-            </label>
-
-            <select asp-for="Condition"
-                    class="form-select">
-
-                <option value="">
-                    -- Select Condition --
-                </option>
-
-                <option value="New">
-                    New
-                </option>
-
-                <option value="Used">
-                    Used
-                </option>
-
-            </select>
-
-            <span asp-validation-for="Condition"
-                  class="text-danger">
-            </span>
-
-        </div>
-
-        <!-- Buttons -->
-        <button type="submit"
-                class="btn btn-primary">
-            Sell Item
-        </button>
-
-        <a asp-controller="Home"
+        <a asp-controller="Product"
            asp-action="Index"
-           class="btn btn-secondary">
-            Cancel
+           class="btn btn-outline-secondary">
+            ← Browse Products
         </a>
 
-    </form>
+    </div>
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-4">
+
+                        <h4 class="fw-bold">
+                            Product Information
+                        </h4>
+
+                        <p class="text-muted mb-0">
+                            Fill in the details below to list your item.
+                        </p>
+
+                    </div>
+
+                    <!-- VALIDATION SUMMARY -->
+                    <div asp-validation-summary="ModelOnly"
+                         class="alert alert-danger">
+                    </div>
+
+                    <form asp-controller="Product"
+                          asp-action="Create"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <!-- PRODUCT TITLE -->
+                        <div class="mb-4">
+
+                            <label asp-for="Title"
+                                   class="form-label fw-semibold">
+                                Product Title
+                            </label>
+
+                            <input asp-for="Title"
+                                   class="form-control"
+                                   placeholder="Example: Engineering Mathematics Book" />
+
+                            <span asp-validation-for="Title"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <!-- DESCRIPTION -->
+                        <div class="mb-4">
+
+                            <label asp-for="Description"
+                                   class="form-label fw-semibold">
+                                Description
+                            </label>
+
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="Describe the product, its condition, and any other useful information..."></textarea>
+
+                            <span asp-validation-for="Description"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <!-- PRICE -->
+                        <div class="mb-4">
+
+                            <label asp-for="Price"
+                                   class="form-label fw-semibold">
+                                Price
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    ₹
+                                </span>
+
+                                <input asp-for="Price"
+                                       type="number"
+                                       step="0.01"
+                                       class="form-control"
+                                       placeholder="Enter price" />
+
+                            </div>
+
+                            <span asp-validation-for="Price"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <!-- CATEGORY AND CONDITION -->
+                        <div class="row">
+
+                            <!-- CATEGORY -->
+                            <div class="col-md-6 mb-4">
+
+                                <label asp-for="Category"
+                                       class="form-label fw-semibold">
+                                    Category
+                                </label>
+
+                                <select asp-for="Category"
+                                        class="form-select">
+
+                                    <option value="">
+                                        -- Select Category --
+                                    </option>
+
+                                    <option value="Books & Notes">
+                                        Books & Notes
+                                    </option>
+
+                                    <option value="Electronics">
+                                        Electronics
+                                    </option>
+
+                                    <option value="Engineering Equipment">
+                                        Engineering Equipment
+                                    </option>
+
+                                    <option value="Furniture">
+                                        Furniture
+                                    </option>
+
+                                    <option value="Clothing">
+                                        Clothing
+                                    </option>
+
+                                    <option value="Sports">
+                                        Sports
+                                    </option>
+
+                                    <option value="Stationery">
+                                        Stationery
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                                <span asp-validation-for="Category"
+                                      class="text-danger">
+                                </span>
+
+                            </div>
+
+                            <!-- CONDITION -->
+                            <div class="col-md-6 mb-4">
+
+                                <label asp-for="Condition"
+                                       class="form-label fw-semibold">
+                                    Condition
+                                </label>
+
+                                <select asp-for="Condition"
+                                        class="form-select">
+
+                                    <option value="">
+                                        -- Select Condition --
+                                    </option>
+
+                                    <option value="New">
+                                        New
+                                    </option>
+
+                                    <option value="Used">
+                                        Used
+                                    </option>
+
+                                </select>
+
+                                <span asp-validation-for="Condition"
+                                      class="text-danger">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <!-- BUTTONS -->
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary px-4">
+                                Sell Item
+                            </button>
+
+                            <a asp-controller="Product"
+                               asp-action="Index"
+                               class="btn btn-secondary px-4">
+                                Cancel
+                            </a>
+
+                            <a asp-controller="Home"
+                               asp-action="Index"
+                               class="btn btn-outline-secondary px-4">
+                                Home
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- HELP CARD -->
+            <div class="card border-0 bg-light mt-4">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold">
+                        Tips for selling
+                    </h5>
+
+                    <ul class="text-muted mb-0">
+                        <li>Use a clear product title.</li>
+                        <li>Give an honest description of the item.</li>
+                        <li>Enter a reasonable price.</li>
+                        <li>Select the correct category and condition.</li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

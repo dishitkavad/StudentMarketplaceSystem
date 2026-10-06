@@ -1,0 +1,269 @@
+﻿
+@model IEnumerable<StudentMarketplaceSystem.Models.Report>
+
+@{
+    ViewData["Title"] = "Manage Reports";
+}
+
+<div class="container py-4">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="fw-bold mb-1">
+                Manage Reports
+            </h1>
+
+            <p class="text-muted mb-0">
+                Review and manage reports submitted by students.
+            </p>
+        </div>
+
+        <a href="/Admin/Dashboard"
+           class="btn btn-outline-secondary">
+            ← Admin Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- SUCCESS / INFO MESSAGE -->
+    @if (TempData["ReportMessage"] != null)
+    {
+        <div class="alert alert-info border-0 shadow-sm rounded-3">
+            @TempData["ReportMessage"]
+        </div>
+    }
+
+
+    <!-- NO REPORTS -->
+    @if (!Model.Any())
+    {
+        <div class="card border-0 shadow-sm rounded-4">
+
+            <div class="card-body text-center py-5">
+
+                <div class="fs-1 mb-3">
+                    ✅
+                </div>
+
+                <h4 class="fw-bold">
+                    No Reports
+                </h4>
+
+                <p class="text-muted mb-0">
+                    There are currently no reports to review.
+                </p>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <!-- REPORTS -->
+
+        foreach (var report in Model)
+        {
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+                <div class="card-body p-4">
+
+                    <!-- REPORT HEADER -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <h5 class="fw-bold mb-0">
+                            Report #@report.ReportId
+                        </h5>
+
+                        @if (report.Status == "Pending")
+                        {
+                            <span class="badge bg-warning text-dark px-3 py-2">
+                                Pending
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success px-3 py-2">
+                                Resolved
+                            </span>
+                        }
+
+                    </div>
+
+                    <hr />
+
+
+                    <!-- REPORT DETAILS -->
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <p>
+                                <strong>Reporter:</strong><br />
+
+                                @if (report.Reporter != null)
+                                {
+                                    @report.Reporter.Name
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Unknown
+                                    </span>
+                                }
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <p>
+                                <strong>Date:</strong><br />
+
+                                @report.CreatedDate.ToString("dd-MM-yyyy HH:mm")
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <p>
+                                <strong>Reported Product:</strong><br />
+
+                                @if (report.Product != null)
+                                {
+                                    @report.Product.Title
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Not a product report
+                                    </span>
+                                }
+
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <p>
+                                <strong>Reported User:</strong><br />
+
+                                @if (report.ReportedUser != null)
+                                {
+                                    @report.ReportedUser.Name
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Not a user report
+                                    </span>
+                                }
+
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-12">
+
+                            <p>
+                                <strong>Reason:</strong><br />
+
+                                @report.Reason
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-12">
+
+                            <p class="mb-0">
+                                <strong>Description:</strong><br />
+
+                                @if (!string.IsNullOrWhiteSpace(report.Description))
+                                {
+                                    @report.Description
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        No description provided.
+                                    </span>
+                                }
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr />
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="d-flex flex-wrap gap-2">
+
+                        @if (report.Status == "Pending")
+                        {
+                            <form asp-area="Admin"
+                                  asp-controller="Reports"
+                                  asp-action="Resolve"
+                                  asp-route-id="@report.ReportId"
+                                  method="post">
+
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit"
+                                        class="btn btn-success">
+                                    ✓ Mark as Resolved
+                                </button>
+
+                            </form>
+                        }
+
+
+                        <form asp-area="Admin"
+                              asp-controller="Reports"
+                              asp-action="Delete"
+                              asp-route-id="@report.ReportId"
+                              method="post">
+
+                            @Html.AntiForgeryToken()
+
+                            <button type="submit"
+                                    class="btn btn-danger">
+                                Delete
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+    }
+
+
+    <!-- BOTTOM NAVIGATION -->
+
+    <div class="mt-4">
+
+        <a href="/Admin/Dashboard"
+           class="btn btn-secondary">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>

@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,30 +37,21 @@ namespace StudentMarketplaceSystem.Controllers
                 .Include(p => p.Seller)
                 .AsQueryable();
 
-            // ==========================================
             // SEARCH
-            // ==========================================
-
             if (!string.IsNullOrWhiteSpace(search))
             {
                 query = query.Where(p =>
                     p.Title.Contains(search));
             }
 
-            // ==========================================
             // CATEGORY FILTER
-            // ==========================================
-
             if (!string.IsNullOrWhiteSpace(category))
             {
                 query = query.Where(p =>
                     p.Category == category);
             }
 
-            // ==========================================
             // SORTING
-            // ==========================================
-
             switch (sort)
             {
                 case "oldest":
@@ -88,7 +78,6 @@ namespace StudentMarketplaceSystem.Controllers
 
             var products = await query.ToListAsync();
 
-            // Send values to the view
             ViewBag.Search = search;
             ViewBag.Category = category;
             ViewBag.Sort = sort;
@@ -338,6 +327,35 @@ namespace StudentMarketplaceSystem.Controllers
             {
                 return Forbid();
             }
+
+            // ==========================================
+            // REMOVE RELATED RECORDS FIRST
+            // ==========================================
+
+            // Remove wishlist records
+            var wishlists = await _context.Wishlists
+                .Where(w => w.ProductId == id)
+                .ToListAsync();
+
+            _context.Wishlists.RemoveRange(wishlists);
+
+            // Remove report records
+            var reports = await _context.Reports
+                .Where(r => r.ProductId == id)
+                .ToListAsync();
+
+            _context.Reports.RemoveRange(reports);
+
+            // Remove transaction records
+            var transactions = await _context.Transactions
+                .Where(t => t.ProductId == id)
+                .ToListAsync();
+
+            _context.Transactions.RemoveRange(transactions);
+
+            // ==========================================
+            // NOW DELETE THE PRODUCT
+            // ==========================================
 
             _context.Products.Remove(product);
 

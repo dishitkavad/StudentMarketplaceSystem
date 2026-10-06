@@ -1,0 +1,194 @@
+﻿
+@{
+    ViewData["Title"] = "Admin Statistics";
+}
+
+<div class="container py-4">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="fw-bold mb-1">
+                Admin Statistics
+            </h1>
+
+            <p class="text-muted mb-0">
+                Overview of activity on the Student Marketplace.
+            </p>
+        </div>
+
+        <a href="/Admin/Dashboard"
+           class="btn btn-outline-secondary">
+            ← Admin Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- STATISTICS CARDS -->
+    <div class="row g-4">
+
+        <!-- TOTAL USERS -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1 mb-3">
+                        👥
+                    </div>
+
+                    <h6 class="text-muted text-uppercase fw-semibold">
+                        Total Users
+                    </h6>
+
+                    <h2 class="display-5 fw-bold text-primary">
+                        @ViewBag.TotalUsers
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Registered students
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL PRODUCTS -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1 mb-3">
+                        📦
+                    </div>
+
+                    <h6 class="text-muted text-uppercase fw-semibold">
+                        Total Products
+                    </h6>
+
+                    <h2 class="display-5 fw-bold text-primary">
+                        @ViewBag.TotalProducts
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Marketplace products
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SOLD PRODUCTS -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1 mb-3">
+                        ✅
+                    </div>
+
+                    <h6 class="text-muted text-uppercase fw-semibold">
+                        Sold Products
+                    </h6>
+
+                    <h2 class="display-5 fw-bold text-success">
+                        @ViewBag.SoldProducts
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Products marked as sold
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PENDING REQUESTS -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1 mb-3">
+                        ⏳
+                    </div>
+
+                    <h6 class="text-muted text-uppercase fw-semibold">
+                        Pending Requests
+                    </h6>
+
+                    <h2 class="display-5 fw-bold text-warning">
+                        @ViewBag.PendingRequests
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Buy requests waiting for response
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL REPORTS -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1 mb-3">
+                        🚩
+                    </div>
+
+                    <h6 class="text-muted text-uppercase fw-semibold">
+                        Total Reports
+                    </h6>
+
+                    <h2 class="display-5 fw-bold text-danger">
+                        @ViewBag.TotalReports
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Reports submitted by students
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="mt-5">
+
+        <a href="/Admin/Dashboard"
+           class="btn btn-secondary">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>

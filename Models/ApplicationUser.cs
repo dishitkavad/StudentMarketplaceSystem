@@ -9,5 +9,8 @@ namespace StudentMarketplaceSystem.Models
         public string Branch { get; set; } = string.Empty;
 
         public int Year { get; set; }
+
+        // Used by Admin to block or unblock a student
+        public bool IsBlocked { get; set; } = false;
     }
 }

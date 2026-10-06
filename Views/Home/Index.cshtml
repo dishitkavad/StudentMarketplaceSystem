@@ -1,8 +1,304 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- HERO SECTION -->
+
+<div class="container">
+
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+
+        <div class="container-fluid py-5 text-center">
+
+            <h1 class="display-4 fw-bold">
+                Student Marketplace
+            </h1>
+
+            <p class="lead mt-3">
+                Buy, sell and discover useful products within your university community.
+            </p>
+
+            <p class="text-muted">
+                Find affordable items from fellow students or sell things you no longer need.
+            </p>
+
+
+            <!-- MAIN BUTTONS -->
+
+            <div class="mt-4">
+
+                <a asp-controller="Product"
+                   asp-action="Index"
+                   class="btn btn-primary btn-lg me-2">
+
+                    Browse Products
+
+                </a>
+
+
+                @if (User.Identity != null &&
+                     User.Identity.IsAuthenticated)
+                {
+
+                    <a asp-controller="Product"
+                       asp-action="Create"
+                       class="btn btn-success btn-lg">
+
+                        Sell an Item
+
+                    </a>
+
+                }
+                else
+                {
+
+                    <a asp-controller="Account"
+                       asp-action="Login"
+                       class="btn btn-success btn-lg">
+
+                        Login to Sell
+
+                    </a>
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <div class="row text-center">
+
+        <!-- BROWSE -->
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="fs-1 mb-3">
+                        🔍
+                    </div>
+
+                    <h4 class="card-title">
+                        Browse Products
+                    </h4>
+
+                    <p class="card-text text-muted">
+                        Explore books, electronics, furniture, stationery
+                        and other products listed by students.
+                    </p>
+
+                    <a asp-controller="Product"
+                       asp-action="Index"
+                       class="btn btn-outline-primary">
+
+                        Browse Now
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SELL -->
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="fs-1 mb-3">
+                        🛒
+                    </div>
+
+                    <h4 class="card-title">
+                        Sell Your Items
+                    </h4>
+
+                    <p class="card-text text-muted">
+                        Have something you no longer need?
+                        Create a listing and connect with other students.
+                    </p>
+
+                    @if (User.Identity != null &&
+                         User.Identity.IsAuthenticated)
+                    {
+
+                        <a asp-controller="Product"
+                           asp-action="Create"
+                           class="btn btn-outline-success">
+
+                            Sell an Item
+
+                        </a>
+
+                    }
+                    else
+                    {
+
+                        <a asp-controller="Account"
+                           asp-action="Login"
+                           class="btn btn-outline-success">
+
+                            Login First
+
+                        </a>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WISHLIST -->
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="fs-1 mb-3">
+                        ❤️
+                    </div>
+
+                    <h4 class="card-title">
+                        Save Favorites
+                    </h4>
+
+                    <p class="card-text text-muted">
+                        Add interesting products to your wishlist
+                        and find them easily later.
+                    </p>
+
+                    @if (User.Identity != null &&
+                         User.Identity.IsAuthenticated)
+                    {
+
+                        <a asp-controller="Wishlist"
+                           asp-action="Index"
+                           class="btn btn-outline-danger">
+
+                            My Wishlist
+
+                        </a>
+
+                    }
+                    else
+                    {
+
+                        <a asp-controller="Account"
+                           asp-action="Login"
+                           class="btn btn-outline-danger">
+
+                            Login First
+
+                        </a>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HOW IT WORKS -->
+
+    <div class="mt-4 mb-5">
+
+        <h2 class="text-center mb-4">
+            How It Works
+        </h2>
+
+        <div class="row text-center">
+
+            <div class="col-md-3 mb-3">
+
+                <div class="p-3">
+
+                    <h4>1</h4>
+
+                    <h5>Create an Account</h5>
+
+                    <p class="text-muted">
+                        Register using your student details.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3 mb-3">
+
+                <div class="p-3">
+
+                    <h4>2</h4>
+
+                    <h5>Find or List</h5>
+
+                    <p class="text-muted">
+                        Browse products or sell your own item.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3 mb-3">
+
+                <div class="p-3">
+
+                    <h4>3</h4>
+
+                    <h5>Connect</h5>
+
+                    <p class="text-muted">
+                        Send an interested request to the seller.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3 mb-3">
+
+                <div class="p-3">
+
+                    <h4>4</h4>
+
+                    <h5>Complete</h5>
+
+                    <p class="text-muted">
+                        Complete the transaction with the student.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

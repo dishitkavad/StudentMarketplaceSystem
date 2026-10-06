@@ -4,108 +4,219 @@
     ViewData["Title"] = "My Profile";
 }
 
-<h1>My Profile</h1>
+<div class="container">
 
-<hr />
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
+        <div>
+            <h1 class="fw-bold mb-1">My Profile</h1>
+
+            <p class="text-muted mb-0">
+                View and update your student profile information.
+            </p>
+        </div>
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            ← Home
+        </a>
+
     </div>
-}
 
-<div asp-validation-summary="ModelOnly"
-     class="text-danger">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body p-4">
+
+                    <!-- SUCCESS MESSAGE -->
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+
+                    <!-- VALIDATION SUMMARY -->
+                    <div asp-validation-summary="ModelOnly"
+                         class="alert alert-danger">
+                    </div>
+
+                    <form asp-controller="Account"
+                          asp-action="Profile"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <!-- NAME -->
+                        <div class="mb-4">
+
+                            <label asp-for="Name"
+                                   class="form-label fw-semibold">
+                                Full Name
+                            </label>
+
+                            <input asp-for="Name"
+                                   class="form-control"
+                                   placeholder="Enter your full name" />
+
+                            <span asp-validation-for="Name"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div class="mb-4">
+
+                            <label asp-for="Email"
+                                   class="form-label fw-semibold">
+                                Email Address
+                            </label>
+
+                            <input asp-for="Email"
+                                   class="form-control"
+                                   readonly />
+
+                            <small class="text-muted">
+                                Your email address cannot be changed.
+                            </small>
+
+                        </div>
+
+                        <!-- BRANCH -->
+                        <div class="mb-4">
+
+                            <label asp-for="Branch"
+                                   class="form-label fw-semibold">
+                                Branch
+                            </label>
+
+                            <input asp-for="Branch"
+                                   class="form-control"
+                                   placeholder="Example: Computer Engineering" />
+
+                            <span asp-validation-for="Branch"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <!-- YEAR -->
+                        <div class="mb-4">
+
+                            <label asp-for="Year"
+                                   class="form-label fw-semibold">
+                                Year
+                            </label>
+
+                            <select asp-for="Year"
+                                    class="form-select">
+
+                                <option value="0">
+                                    -- Select Year --
+                                </option>
+
+                                <option value="1">
+                                    1st Year
+                                </option>
+
+                                <option value="2">
+                                    2nd Year
+                                </option>
+
+                                <option value="3">
+                                    3rd Year
+                                </option>
+
+                                <option value="4">
+                                    4th Year
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="Year"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <!-- CONTACT NUMBER -->
+                        <div class="mb-4">
+
+                            <label asp-for="ContactNumber"
+                                   class="form-label fw-semibold">
+                                Contact Number
+                            </label>
+
+                            <input asp-for="ContactNumber"
+                                   class="form-control"
+                                   placeholder="Enter your contact number" />
+
+                            <span asp-validation-for="ContactNumber"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <!-- BUTTONS -->
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary px-4">
+                                Save Changes
+                            </button>
+
+                            <a asp-controller="Home"
+                               asp-action="Index"
+                               class="btn btn-secondary px-4">
+                                Cancel
+                            </a>
+
+                            <a asp-controller="Product"
+                               asp-action="Index"
+                               class="btn btn-outline-secondary px-4">
+                                Browse Products
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- PROFILE INFORMATION CARD -->
+            <div class="card border-0 bg-light mt-4">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold">
+                        Profile Information
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Keep your branch, year, and contact information
+                        updated so other students can identify you easily
+                        when interacting through the marketplace.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
-
-<form asp-controller="Account"
-      asp-action="Profile"
-      method="post">
-
-    @Html.AntiForgeryToken()
-
-    <div class="mb-3">
-        <label asp-for="Name"
-               class="form-label">
-        </label>
-
-        <input asp-for="Name"
-               class="form-control" />
-
-        <span asp-validation-for="Name"
-              class="text-danger">
-        </span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Email"
-               class="form-label">
-        </label>
-
-        <input asp-for="Email"
-               class="form-control"
-               readonly />
-
-        <small class="text-muted">
-            Email cannot be changed.
-        </small>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Branch"
-               class="form-label">
-        </label>
-
-        <input asp-for="Branch"
-               class="form-control" />
-
-        <span asp-validation-for="Branch"
-              class="text-danger">
-        </span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Year"
-               class="form-label">
-        </label>
-
-        <input asp-for="Year"
-               type="number"
-               min="1"
-               max="4"
-               class="form-control" />
-
-        <span asp-validation-for="Year"
-              class="text-danger">
-        </span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="ContactNumber"
-               class="form-label">
-        </label>
-
-        <input asp-for="ContactNumber"
-               class="form-control" />
-
-        <span asp-validation-for="ContactNumber"
-              class="text-danger">
-        </span>
-    </div>
-
-    <button type="submit"
-            class="btn btn-primary">
-        Save Changes
-    </button>
-
-    <a asp-controller="Home"
-       asp-action="Index"
-       class="btn btn-secondary">
-        Cancel
-    </a>
-
-</form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

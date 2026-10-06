@@ -1,0 +1,243 @@
+﻿
+@model IEnumerable<StudentMarketplaceSystem.Models.Product>
+
+@{
+    ViewData["Title"] = "Manage Products";
+}
+
+<div class="container py-4">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="fw-bold mb-1">
+                Manage Products
+            </h1>
+
+            <p class="text-muted mb-0">
+                View and manage products listed on the marketplace.
+            </p>
+        </div>
+
+        <a href="/Admin/Dashboard"
+           class="btn btn-outline-secondary">
+            ← Admin Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- MESSAGE -->
+    @if (TempData["ProductMessage"] != null)
+    {
+        <div class="alert alert-info border-0 shadow-sm rounded-3">
+            @TempData["ProductMessage"]
+        </div>
+    }
+
+
+    <!-- NO PRODUCTS -->
+    @if (!Model.Any())
+    {
+        <div class="card border-0 shadow-sm rounded-4">
+
+            <div class="card-body text-center py-5">
+
+                <div class="fs-1 mb-3">
+                    📦
+                </div>
+
+                <h4 class="fw-bold">
+                    No Products Found
+                </h4>
+
+                <p class="text-muted mb-0">
+                    There are currently no products listed on the marketplace.
+                </p>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <!-- PRODUCTS TABLE -->
+
+        <div class="card border-0 shadow-sm rounded-4">
+
+            <div class="card-body p-0">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle mb-0">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th class="px-4 py-3">
+                                    Product
+                                </th>
+
+                                <th class="py-3">
+                                    Seller
+                                </th>
+
+                                <th class="py-3">
+                                    Price
+                                </th>
+
+                                <th class="py-3">
+                                    Category
+                                </th>
+
+                                <th class="py-3">
+                                    Condition
+                                </th>
+
+                                <th class="py-3">
+                                    Status
+                                </th>
+
+                                <th class="py-3">
+                                    Created
+                                </th>
+
+                                <th class="py-3 text-center">
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            @foreach (var product in Model)
+                            {
+                                <tr>
+
+                                    <!-- PRODUCT -->
+                                    <td class="px-4">
+
+                                        <div class="fw-semibold">
+                                            @product.Title
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- SELLER -->
+                                    <td>
+                                        @if (product.Seller != null)
+                                        {
+                                            @product.Seller.Name
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">
+                                                Unknown
+                                            </span>
+                                        }
+                                    </td>
+
+
+                                    <!-- PRICE -->
+                                    <td>
+
+                                        <span class="fw-semibold">
+                                            ₹@product.Price
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- CATEGORY -->
+                                    <td>
+                                        @product.Category
+                                    </td>
+
+
+                                    <!-- CONDITION -->
+                                    <td>
+                                        @product.Condition
+                                    </td>
+
+
+                                    <!-- STATUS -->
+                                    <td>
+
+                                        @if (product.IsSold)
+                                        {
+                                            <span class="badge bg-danger px-3 py-2">
+                                                Sold
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success px-3 py-2">
+                                                Available
+                                            </span>
+                                        }
+
+                                    </td>
+
+
+                                    <!-- CREATED DATE -->
+                                    <td>
+                                        @product.CreatedDate.ToString("dd-MM-yyyy")
+                                    </td>
+
+
+                                    <!-- DELETE -->
+                                    <td class="text-center">
+
+                                        <form action="/Admin/Products/Delete"
+                                              method="post"
+                                              onsubmit="return confirm('Are you sure you want to delete this product?');"
+                                              class="d-inline">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@product.ProductId" />
+
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm px-3">
+                                                Delete
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+
+    <!-- BOTTOM NAVIGATION -->
+
+    <div class="mt-4">
+
+        <a href="/Admin/Dashboard"
+           class="btn btn-secondary">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>

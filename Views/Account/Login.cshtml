@@ -4,46 +4,141 @@
     ViewData["Title"] = "Login";
 }
 
-<h1>Student Login</h1>
+<div class="container">
 
-<form asp-controller="Account" asp-action="Login" method="post">
+    <div class="row justify-content-center">
 
-    <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+        <div class="col-md-6 col-lg-5">
 
-    <div asp-validation-summary="ModelOnly"></div>
+            <!-- LOGIN CARD -->
+            <div class="card shadow-sm border-0">
 
-    <div>
-        <label asp-for="Email"></label>
-        <input asp-for="Email" type="email" />
-        <span asp-validation-for="Email"></span>
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- HEADER -->
+                    <div class="text-center mb-4">
+
+                        <h1 class="fw-bold">
+                            Student Login
+                        </h1>
+
+                        <p class="text-muted">
+                            Login to access your Student Marketplace account.
+                        </p>
+
+                    </div>
+
+                    <!-- VALIDATION SUMMARY -->
+                    <div asp-validation-summary="ModelOnly"
+                         class="alert alert-danger">
+                    </div>
+
+                    <form asp-controller="Account"
+                          asp-action="Login"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden"
+                               name="returnUrl"
+                               value="@ViewData["ReturnUrl"]" />
+
+                        <!-- EMAIL -->
+                        <div class="mb-4">
+
+                            <label asp-for="Email"
+                                   class="form-label fw-semibold">
+                                Email Address
+                            </label>
+
+                            <input asp-for="Email"
+                                   type="email"
+                                   class="form-control"
+                                   placeholder="Enter your email address" />
+
+                            <span asp-validation-for="Email"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <!-- PASSWORD -->
+                        <div class="mb-4">
+
+                            <label asp-for="Password"
+                                   class="form-label fw-semibold">
+                                Password
+                            </label>
+
+                            <input asp-for="Password"
+                                   type="password"
+                                   class="form-control"
+                                   placeholder="Enter your password" />
+
+                            <span asp-validation-for="Password"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <!-- REMEMBER ME -->
+                        <div class="form-check mb-4">
+
+                            <input asp-for="RememberMe"
+                                   class="form-check-input" />
+
+                            <label asp-for="RememberMe"
+                                   class="form-check-label">
+                            </label>
+
+                        </div>
+
+                        <!-- LOGIN BUTTON -->
+                        <button type="submit"
+                                class="btn btn-primary w-100">
+                            Login
+                        </button>
+
+                    </form>
+
+                    <hr class="my-4" />
+
+                    <!-- REGISTER -->
+                    <div class="text-center">
+
+                        <p class="text-muted mb-2">
+                            Don't have an account?
+                        </p>
+
+                        <a asp-controller="Account"
+                           asp-action="Register"
+                           class="btn btn-outline-primary">
+                            Create an Account
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BACK HOME -->
+            <div class="text-center mt-3">
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="text-decoration-none">
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <br />
+</div>
 
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-
-    <br />
-
-    <div>
-        <input asp-for="RememberMe" />
-        <label asp-for="RememberMe"></label>
-    </div>
-
-    <br />
-
-    <button type="submit">Login</button>
-
-</form>
-
-<br />
-
-<p>
-    Don't have an account?
-    <a asp-controller="Account" asp-action="Register">
-        Register here
-    </a>
-</p>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

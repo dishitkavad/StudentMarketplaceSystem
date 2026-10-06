@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StudentMarketplaceSystem.Models;
@@ -94,6 +95,20 @@ namespace StudentMarketplaceSystem.Controllers
                 return View(model);
             }
 
+            // Find the user using the email address
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            // Check whether the user exists and is blocked
+            if (user != null && user.IsBlocked)
+            {
+                ModelState.AddModelError(
+                    "",
+                    "Your account has been blocked by the administrator.");
+
+                return View(model);
+            }
+
+            // Try to sign in the user
             var result = await _signInManager.PasswordSignInAsync(
                 model.Email,
                 model.Password,
